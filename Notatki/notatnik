@@ -1,66 +1,69 @@
-//Express
-const express = require('express')
-const app = express()
+const MongoClient = require('mongodb').MongoClient
 
-const path = require('path')
-const router = express.Router()
+function Database () {
+  if (!new.target) {
+    return new Database()
+  }
 
-//BD
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
-//Potrzebne do szukania w BD: 
-const ObjectId = mongodb.ObjectID
+  let db = null
+  let client = null
+
+  this.connect = async (config) => {
+    try {
+        client = await MongoClient.connect(config.url, config.options)
+        db = client.db(config.name)
+
+        if (!db) {
+          console.error(`can't establish mongo connection reason: null client`)
+          throw(e)
+        }
+
+        console.info('successful establish DB connection')
+
+    } catch (e) {
+      throw e
+    }
+  }
+
+  this.disconnect = () => {
+    client.close()
+  }
+
+  process.on('SIGTERM', () => {
+    client.close()
+  })
+
+  this.insert = async (name, content) => {
+    const collection = db.collection(name)
+    return db.collection(name).updateOne({ email: content.email }, { $set: { rss: content.rss } }, { upsert: true })
+  }
+
+  this.find = async (name, item) => {
+    const collection = db.collection(name)
+    return collection.findOne({}, { email: item })
+  }
+
+  this.update = async (name, oldContent, newContent) => {
+    const collection = db.collection(name)
+    return collection.updateOne(oldContent, newContent)
+  }
+
+  this.remove = async (name, content) => {
+    const collection = db.collection(name)
+    return collection.deleteOne(content)
+  }
+
+  this.drop = async (name) => {
+    const collection = db.collection(name)
+    return collection.drop()
+  }
+}
+
+module.exports = Database
 
 
 
-//Łączenie z bazą danych
-//connectionURL -----> !trzeba będzie ustawić inne przy łączeniu się z bazą danych na azurze!
-const connectionURL = 'mongodb://127.0.0.1:27017'
-const databaseName = 'gigas'
-
-
-
-
-// //Wystawienie własnego pliku index.html  DOPÓKI ODKOMENTOWANE = TESTY PRZECHODZĄ NEGATYWNIE
-
-// NIE DZIAŁAJĄCY PRZYKŁAD
-// let http = require('http')
-// let fs = require('fs')
-// const { response } = require('express')
-
-// let handleRequest = (request, response => {
-//     response.writeHead(200, {
-//         'Content-Type': 'text/html'
-//     });
-//     fs.readFile('./index.html', null, function (error, data){
-//         if(error){
-//             response.writeHead(404);
-//             response.write('Nieznaleziono pliku')
-//         } else{
-//             response.write(data);
-//         }
-//         response.end();
-//     });
-// }
-
-
-
-//pokazanie że strona główna aplikacji ma połączenie z serwerem
-// app.get('/', (req,res) => {
-//     res.status(200).send('Hello World');
-// });
-
-// module.exports = app
-
-
-//Łączenie się z bazą danych
-// MongoClient.connect(connectionURL,{useNewUrlParser:true}, (error, client) => {
-//     if(error) {
-//         return console.log('Nie można połączyć się z bazą danych')
-//     }
-//     console.log('Połaczono z bazą danych')
-// })
-
+///////////////////////////////////////////////////////////
 
 
 
@@ -110,38 +113,6 @@ const databaseName = 'gigas'
 //         console.log(res.ops)
 //     })
 // })
-
-
-//WTAWIANIE DANYCH METODĄ ASYNCHRONICZNA (DOKUMENTACJA JEST)
-// describe('insert', () => {
-//     let connection;
-//     let db;
-  
-//     beforeAll(async () => {
-//       connection = await MongoClient.connect(global.__MONGO_URI__, {
-//         useNewUrlParser: true,
-//       });
-//       db = await connection.db(global.__MONGO_DB_NAME__);
-//     });
-  
-//     afterAll(async () => {
-//       await connection.close();
-//       await db.close();
-//     });
-  
-//     it('Sprawdza uzupełnianie danych w kolekcji', async () => {
-//       const users = db.collection('users');
-  
-//       const mockUser = {_id: 'some-user-id', UserName: 'Gigas'};
-//       await users.insertOne(mockUser);
-  
-//       const insertedUser = await users.findOne({_id: 'some-user-id'});
-//       expect(insertedUser).toEqual(mockUser);
-//     });
-//   });
-
-
-
 
 
 
@@ -307,3 +278,59 @@ const databaseName = 'gigas'
 
 // })
 //
+
+
+///////////////////////////////////////////
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+
+<body>
+    E-mail:<br>
+    <input type="email" id="mail" name="mail" placeholder="mail@mail.pl" <input type="submit"><br>
+    <input type="submit">
+    <br><br><br><br>
+
+    <form action="test.php" method="post">
+        RSS URL: <input type="rss" id="rss" name="rss" placeholder="www.www.pl" <input type="submit"><br>
+        <input type="submit">
+        <br><br><br><br>
+
+        <form action="/action_page.php">
+            <textarea name="message" rows="10" cols="30" placeholder="test tekst"></textarea>
+            <br><br>
+            <input type="submit">
+        </form>
+    </form>
+
+</body>
+
+</html>
+
+
+
+
+
+ /*  function feedparser(urls){
+
+    this.feedparser = (async () => {
+
+        let urls = new Array()
+      for(url in urls){
+           for(i = 0, len = urls.length; i<len; i++){
+                url.toString()
+
+            }
+            let feed = await parser.parseURL(url)
+            console.log(feed.title);
+            feed.items.forEach(item => {
+                console.log(item.title + ':' +item.link);
+            })          
+        }})();
+}*/

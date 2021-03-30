@@ -1,89 +1,71 @@
-const {MongoClient} = require('mongodb')
-const promisify = require('utlis')
+const config = require('config')
+const Database = require('../src/storage/db')
 
-// describe("Test bazy danych", () =>{
-//     test("Włóż wartość", () => {
-//         const val = {a:2}
-//         expect(val).toEqual({a:2})
-//     })
+describe('Test db interface', () => {
+	const db = new Database()
 
-//     test("znajdź wartość", () => {
-//         const val = {a:2}
-//         expect(val).toEqual({a:2})
-//     })
+	beforeAll(async () => {
+		try {
+			const dbConf = config.get('db')
+			await db.connect(dbConf)
+		} catch (e) {
+			throw(e)
+		}
+	})
 
-//     test("Aktualizuj wartość", () => {
-//         const val = {a:2}
-//         expect(val).toEqual({a:2})
-//     })
+	beforeEach(async () => {
+		try {
+			await db.insert('rss', { 'email': 'test@test.pl', 'rss': 'rss.xml' })
+		} catch (e) {
+			throw(e)
+		}
+	});
+	
+	afterAll(() => {
+		db.disconnect()
+	})
+	
+	afterEach(async () => {
+		try {
+			await db.drop('rss')
+		} catch (e) {
+			throw(e)
+		}
+	});
 
-//     test("Usuń wartość", () => {
-//         const val = {a:2}
-//         expect(val).toEqual({a:2})
-//     })  
-// })
+	test('It should insert data', async () => {
+		try {
+			const res = await db.insert('rss', { 'email': 'test2@test.pl', 'rss': 'rss.xml' })
+			expect(res.result.ok).toBe(1)
+		} catch (e) {
+			throw(e)
+		}
+	})
+	
+	test('It should find data', async () => {
+		try {
+			const data = await db.find('rss', { email: { $eq: 'test@test.pl' } })
+      		expect(data).toMatchObject({ email: 'test@test.pl', rss: 'rss.xml' });
+		} catch (e) {
+			throw(e)
+		}
+	})
 
-
-// 
-
-// //Metoda promisify
-class Db 
-{
-    
-    constructor() {
-        connect()
-    }
-
-    // insert(name,data){
-    //     test('Insert into db', async () => {
-    //         try {
-    //             const resp = await request(app).get('/')
-    //             // const resp = await request(app).delete('/')
-    //             // const resp = await request(app).put('/')
-    //             // const resp = await request(app).patch('/')
-    //             expect(resp.statusCode).toBe(200)
-    //             expect(resp.text).toBe('Hello World')
-    //         } catch(e) {
-    //             throw e
-    //         }
-    //     }
-    // }
-
-    find(name,query){
-
-    }
-
-    update(name,data){
-
-    }
-
-    remove(data){
-
-    }
-}
-
-//Metoda callbackow
-// class Db 
-// {
-//     constructor() {
-//         connect()
-//     }
-
-//     insert(name,data,callback(err, data)){
-
-//     }
-
-//     find(name,query,callback(err, data)){
-
-//     }
-
-//     update(name,data,callback(err, data)){
-
-//     }
-
-//     remove(data,callback(err, data)){
-
-//     }
-// }
-
-
+	test('It should update value', async () => {
+		try {
+			const res = await db.update('rss', { "email" : "test@test.pl" }, { $set: {'email': 'test2@test.pl', 'rss': '2rss.xml' }})
+			expect(res.result.ok).toBe(1)
+		} catch (e) {
+			throw(e)
+		}
+	})
+	
+	test('It should remove value', async () => {
+		try {
+			const res = await db.remove('rss', { 'email': 'test@test.pl' })
+      		expect(res.result.ok).toBe(1)
+		} catch (e) {
+			throw(e)
+		}
+	})
+})

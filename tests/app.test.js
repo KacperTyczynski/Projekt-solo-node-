@@ -1,6 +1,6 @@
 //const { TestScheduler } = require("@jest/core");
 const request = require("supertest");
-const app = require('../src/app');
+const app = require('../app');
 
 describe('Test the root path', () => {
     //test('Powinno zwrocic metode GET', (done) => {
@@ -19,7 +19,6 @@ describe('Test the root path', () => {
             // const resp = await request(app).put('/')
             // const resp = await request(app).patch('/')
             expect(resp.statusCode).toBe(200)
-            expect(resp.text).toBe('Hello World')
         } catch(e) {
             throw e
         }

@@ -1,0 +1,34 @@
+const Parser = require('rss-parser')
+let parser = new Parser();
+
+class feedparser {
+    constructor(urls,xml) {
+
+    }
+
+    async feedparser(urls) {
+        let feed = await parser.parseURL(urls);
+        console.log(feed.title);
+
+        feed.items.forEach(item => {
+            console.log(item.title + ':' + item.link);
+        });
+    };
+
+    async feedparserXML() {
+    
+        let feed = await parser.parseString(xml)
+        console.log(feed.title);
+    
+        feed.items.forEach(item => {
+            console.log(item.title + ':' +item.link);
+        });
+    
+    }
+}
+
+const elo = new feedparser()
+const urls = [ 'https://www.reddit.com/.rss', 'http://blogs.nasa.gov/stationreport/feed/']
+elo.feedparser(urls)
+module.exports = feedparser
+//'https://www.reddit.com/.rss', 

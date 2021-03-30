@@ -1,17 +1,10 @@
-//const express = require('express')
-//const app = express()
-//app.get('/', (req, res) => {
-//    res.status(200).send("Hello World!!!!!!")
-//});
+const express = require('express')
 
 //app.listen(8080, () => console.log(`server is running at 8080`))
 
 //app.get('/ja', (req,res) => {
 //    res.status(200).send('Hi Kacper')
 //})
-
-
-
 
 //const port = process.env.PORT || config.get('port')
 //app.listen(port, () => console.log(`server is running at ${port}`))  Na AZURE
