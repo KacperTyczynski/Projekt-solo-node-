@@ -1,135 +1,133 @@
 
+<!--- Całego CSS muszę stworzyć bo póki co wszystko wrzuciłem tu żywcem i wygląda to jak g****
+      
+      Najważniejsze na ten moment: Serwer nie widzi łączności z plikiem events.js gdzie owrappowałem działania przyciskówno
+      (Na ten moment jednego przycisku - tego co ma wysyłac URL to tabelki niżej)
+
+-->
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>RSS Feedmail</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">    
-
-  <!--Styl strony-->
-  <!-- Przeniesiono do pliku main.css-->
-  <style>
-  
-    logo{
-    }
-
-    body{
-
-    background-color: #ebeff5;
-
-    }
-  </style>
-
-
-  <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
-
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <!--LOGO-->
+      <a class="navbar-brand" href="#">
+        <!--<img src="miejsce na obrazek" alt="" width="30" height="24" class="d-inline-block align-top"> -->
+        RSS Feedmail
+      </a>
+      <!-- 
 
-  <div class="container-fluid">
-    <!--LOGO-->
-    <a class="navbar-brand" href="#">
-      <!--<img src="miejsce na obrazek" alt="" width="30" height="24" class="d-inline-block align-top"> -->
-       RSS Feedmail
-    </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      </button>
 
-    <!-- 
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    </button>
-
-    -->
-    <!-- Miejsce na dodatkowe strony-->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">ZAPLECZE</a>
-        </li>
-      </ul>
+      -->
+      <!-- Miejsce na dodatkowe strony-->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">ZAPLECZE</a>
+          </li>
+        </ul>
+      </div>
+      <!--Koniec miejsca na dodatkowe strony-->
+      
+      <div>
+        <!-- <form class="container-fluid justify-content-start"> -->
+        <form id="buttons">
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="savebtn">Save</button>        
+        <button class="btn btn-sm btn-outline-secondary" type="button">Preview</button>
+        <button class="btn btn-outline-success me-2" type="button">SEND</button>
+        </form>
+        <!-- </form> -->
+      </div>
     </div>
-    <!--Koniec miejsca na dodatkowe strony-->
-    
-    <div>
-      <!-- <form class="container-fluid justify-content-start"> -->
-      <button class="btn btn-sm btn-outline-secondary" type="button">Zapisz</button>        
-      <button class="btn btn-sm btn-outline-secondary" type="button">Cofnij</button>
-      <button class="btn btn-outline-success me-2" type="button">WYŚLIJ</button>
-      <!-- </form> -->
+
+  </nav>
+
+  <br>
+
+  <div class="row">
+      <!--Początek lewej strony-->
+    <div class="col-md-6">
+
+      <h6>Adres e-mail:</h6>
+
+      <div class="card card-body">
+              <div class="col-md-12 col-12">
+              <!-- Email -->
+                  <form action="/emailPut" method= "POST">
+                      <div class="form-group">
+                          <input type="email" class="form-control" id="e-mail" placeholder="nazwisko_nralbumu@cloud.wsb.wroclaw.pl">
+                          <small id="emailHelp" class="form-text text-muted">Pssss.. Twoje dane są bezpieczne, nikomu ich nie dam</small>
+                      </div>
+                  </form>
+              </div>
+      </div>
+          <hr>
+      <div class="card card-body">
+              <div class="col-md-12 col-10" id="iframe">
+            <table class="table table-sm">
+                      <!--Miejsce na wrzut RSS-->
+              <tr>
+                          <iframe id="encoder_iframe" height="95%" width="100%" src=""> <!-- TU NIE DZIAŁA-->
+                          </iframe>
+                          <br>
+                      </tr>
+            </table>
+              </div>
+      </div>
     </div>
+      <!--Koniec lewej strony-->
+
+      <!--Początek prawej strony-->
+    <div class="col-md-6">
+      <h6>RSS Url</h6>
+          <!--Początek RSS URL-->
+          <div class="card card-body">
+              <div class="col-md-12 col-6">
+                  <form id= "urlAdd">
+                      <div class="form-group">
+                          <input type="url" name="url" id="url"
+                              placeholder="https://jakisprzyklad.pl"
+                              pattern="https://.*" size="80"
+                              required
+                          >
+                          <input class="btn" type="submit" value="Submit">
+                      </div>
+                  </form>                    
+              </div>
+          </div>
+          <!--Koniec RSS url-->
+      <hr>
+          <!--Początek sekcji RSS-->
+          <section class="container">
+              <div class="card text-white bg-dark mb-3" style="max-width: 55rem;">
+                  <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">RSS</p>
+                      <form id="tabela">
+                      </form>
+                  </div>
+              </div>
+
+          </section>
+          <!--Koniec sekcji RSS-->
+    </div>
+
   </div>
 
-</nav>
-
-<br>
-
-<div class="row">
-    <!--Początek lewej strony-->
-	<div class="col-md-6">
-
-		<h6>Adres e-mail:</h6>
-
-		<div class="card card-body">
-            <div class="col-md-12 col-12">
-            <!-- Email -->
-                <form>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="e-mail" placeholder="nazwisko_nralbumu@cloud.wsb.wroclaw.pl">
-                        <small id="emailHelp" class="form-text text-muted">Pssss.. Twoje dane są bezpieczne, nikomu ich nie dam</small>
-                    </div>
-                </form>
-            </div>
-		</div>
-        <hr>
-		<div class="card card-body">
-            <div class="col-md-12 col-10" id="iframe">
-			    <table class="table table-sm">
-                    <!--Miejsce na wrzut RSS-->
-				    <tr>
-                        <iframe id="encoder_iframe" height="95%" width="100%" src="https://9gag.com"> <!-- TU NIE DZIAŁA-->
-                        </iframe>
-                        <br>
-                    </tr>
-			    </table>
-             </div>
-		</div>
-	</div>
-    <!--Koniec lewej strony-->
-
-    <!--Początek prawej strony-->
-	<div class="col-md-6">
-		<h6>RSS Url</h6>
-        <!--Początek RSS URL-->
-        <div class="card card-body">
-            <div class="col-md-12 col-6">
-                <form>
-                    <div class="form-group">
-                        <input type="url" name="url" id="url"
-                            placeholder="https://jakisprzyklad.pl"
-                            pattern="https://.*" size="80"
-                            required
-                        >
-                        <button type="submit" class="btn btn-primary mb-2">Dodaj</button>
-                    </div>
-                </form>                    
-            </div>
-        </div>
-        <!--Koniec RSS url-->
-     <hr>
-        <!--Początek sekcji RSS-->
-            <div class="card text-white bg-dark mb-3" style="max-width: 55rem;">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text">RSS</p>
-                </div>
-            </div>
-        <!--Koniec sekcji RSS-->
-	</div>
-
-</div>
-
+  <script src="./javascript/events.js"></script>
 </body>
-
 </html>

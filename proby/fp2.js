@@ -12,12 +12,18 @@ class Feedparser {
         if(boo){
             for(let url of urls){
                 let feed = await parser.parseURL(url);
+                parser.parseURL(url).then( (feed) => {
+                    
+                }).catch( e => e.message)
+
+                
                 /*console.log(feed.title);
                 //feed.items.forEach(item => {
                 //    console.log(item.title + ':' +item.link);
                 //})
                 */
-                feeds.push(feed)
+                feeds.push(feed)    
+                
 
             }
             //console.log(JSON.stringify(feeds))

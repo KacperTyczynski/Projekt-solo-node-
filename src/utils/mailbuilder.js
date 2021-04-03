@@ -1,7 +1,6 @@
 import mjml2html from 'mjml'
 const feeds = require('./fp2').feeds
 
-
 class mailBuilder{
     constructor(){
         
