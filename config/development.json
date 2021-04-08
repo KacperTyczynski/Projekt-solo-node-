@@ -1,10 +1,15 @@
 {
     "port": "8000",
+
     "db": {
         "url":"mongodb://127.0.0.1:27017",
         "name":"gigas",
         "Options":{
             "undefinedTopology": true
-        }
+        },  
+    "mailGun" :{
+        "api_key" : "XXXXXX",
+        "domain" :" " 
+    }
     }
 }

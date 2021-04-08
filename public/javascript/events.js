@@ -1,20 +1,60 @@
-const myForm= document.querySelector('#urlAdd')
-const rss = document.querySelector('#url')
-const tabela = document.querySelector('#tabela')
+const inptRss = document.getElementById("url")
+const btnInsert = document.getElementById("btn")
+const lsOutput = document.getElementById("lsOutput")
+const btnDelete = document.getElementById("btn2")
+const saveBtn = document.getElementById("savebtn")
+const previewBtn = document.getElementById("previewbtn")
+const sendBtn = document.getElementById("sendbtn")
+const email = document.getElementById('e-mail')
+const rssKey = "rss"
 
-myForm.addEventListener('submit', onSubmit)
+btnInsert.onclick = function() {
+        const value = inptRss.value
+        if(value === null){
+            alert('Wprowadź url nim klikniesz "Dodaj"!')
+            return
+        } else {
+            const key= localStorage.key(rssKey)
+            const rsses = localStorage.getItem(value)  
+            lsOutput.innerHTML+=`${value} <br />`
+        }
 
-function onSubmit(e) {
-    e.preventDefault()  
-    const li = document.createElement('li')
-    li.appendChild(document.createTextNode(`${rss.value}`))
-
-    tabela.appendChild(li)
-
-
-    nameInput.value = ''
-
+/*
+        if (value === null){
+            alert('Proszę wpisać adres url!')
+            return 
+        } else {
+            const rsses = localStorage.getItem(rssKey)  
+            rsses.push(value)
+        }
+*/
 }
 
-//// Nie działa na serwerze, jak odpalam index.html tak o to śmiga. Trzeba by pewnie owrappować w klasę i wyeksportować moduł 
-//// + trzeba wynik i tak zapisać w pamięci podręcznej, póki co widziałem jedynie opcje w node-cache 
+btnDelete.onclick = function() {
+    localStorage.clear()
+    location.reload()
+}
+
+saveBtn.onclick = async function() {
+    email.readOnly = true
+    urlsy = new Array()
+    const rssesKey= localStorage.key(rssKey)
+    const rsses =localStorage.getItem(rssesKey)
+    email
+    let object ={}
+    let koszyk = []
+    object.email = email
+    object.rsses = urlsy
+    koszyk.push(object)
+
+    const content = {
+        'email' : email,
+        'feed' : rsses
+    }
+
+    JSON.stringify(content)
+    console.log(content)
+
+    //fetch()
+
+}

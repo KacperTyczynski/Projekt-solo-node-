@@ -1,15 +1,4 @@
 
-<!--- Całego CSS muszę stworzyć bo póki co wszystko wrzuciłem tu żywcem i wygląda to jak g****
-      
-      Najważniejsze na ten moment: Serwer nie widzi łączności z plikiem events.js gdzie owrappowałem działania przyciskówno
-      (Na ten moment jednego przycisku - tego co ma wysyłac URL to tabelki niżej)
-
--->
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,92 +10,80 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
+
       <!--LOGO-->
-      <a class="navbar-brand" href="#">
-        <!--<img src="miejsce na obrazek" alt="" width="30" height="24" class="d-inline-block align-top"> -->
+      <a class="navbar-brand" href="">
+      <img src="/images/logo.png" width="35" height="35" alt="rssLogo">
         RSS Feedmail
       </a>
-      <!-- 
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      </button>
 
-      -->
-      <!-- Miejsce na dodatkowe strony-->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">ZAPLECZE</a>
-          </li>
-        </ul>
-      </div>
-      <!--Koniec miejsca na dodatkowe strony-->
-      
+
+      <!-- PRZYCISKI-->
       <div>
-        <!-- <form class="container-fluid justify-content-start"> -->
-        <form id="buttons">
+        <form action="/email" method= "POST">
         <button class="btn btn-sm btn-outline-secondary" type="button" id="savebtn">Save</button>        
-        <button class="btn btn-sm btn-outline-secondary" type="button">Preview</button>
-        <button class="btn btn-outline-success me-2" type="button">SEND</button>
-        </form>
-        <!-- </form> -->
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="previewbtn">Preview</button>
+        <button class="btn btn-outline-success me-2" type="button" id="sendbtn">SEND</button>
+        
       </div>
     </div>
-
   </nav>
+  <!--Koniec paska menu u góry strony-->
 
   <br>
-
+  
+  <!--Początek lewej strony-->
   <div class="row">
-      <!--Początek lewej strony-->
     <div class="col-md-6">
-
       <h6>Adres e-mail:</h6>
 
       <div class="card card-body">
               <div class="col-md-12 col-12">
-              <!-- Email -->
-                  <form action="/emailPut" method= "POST">
+                <!-- Email -->
+
                       <div class="form-group">
-                          <input type="email" class="form-control" id="e-mail" placeholder="nazwisko_nralbumu@cloud.wsb.wroclaw.pl">
+                          <input type="email" class="form-control" id="e-mail" name="email" placeholder="nazwisko_nralbumu@cloud.wsb.wroclaw.pl">
                           <small id="emailHelp" class="form-text text-muted">Pssss.. Twoje dane są bezpieczne, nikomu ich nie dam</small>
                       </div>
-                  </form>
+
               </div>
       </div>
-          <hr>
+
+        <hr>
+
       <div class="card card-body">
-              <div class="col-md-12 col-10" id="iframe">
+          <div class="col-md-12 col-10" id="iframe">
             <table class="table table-sm">
-                      <!--Miejsce na wrzut RSS-->
+            <!--Miejsce na wrzut RSS       TZW. IFRAME-->
               <tr>
-                          <iframe id="encoder_iframe" height="95%" width="100%" src=""> <!-- TU NIE DZIAŁA-->
-                          </iframe>
-                          <br>
-                      </tr>
+                <iframe id="encoder_iframe" height="700" width="100" src=""> 
+                </iframe>
+              <br>
+              </tr>
             </table>
-              </div>
+          </div>
       </div>
     </div>
-      <!--Koniec lewej strony-->
+  <!--Koniec lewej strony-->
 
-      <!--Początek prawej strony-->
+
+
+  <!--Początek prawej strony-->
     <div class="col-md-6">
       <h6>RSS Url</h6>
           <!--Początek RSS URL-->
           <div class="card card-body">
               <div class="col-md-12 col-6">
-                  <form id= "urlAdd">
                       <div class="form-group">
                           <input type="url" name="url" id="url"
                               placeholder="https://jakisprzyklad.pl"
                               pattern="https://.*" size="80"
                               required
                           >
-                          <input class="btn" type="submit" value="Submit">
-                      </div>
-                  </form>                    
+                          <button type="button" id="btn"> Dodaj </button>
+                          <button type="button" id="btn2"> Wyczyść listę </button>
+                      </div>                
               </div>
           </div>
           <!--Koniec RSS url-->
@@ -117,17 +94,16 @@
                   <div class="card-body">
                       <h5 class="card-title"></h5>
                       <p class="card-text">RSS</p>
-                      <form id="tabela">
-                      </form>
+                      <div id="lsOutput"></div>
                   </div>
               </div>
-
+          </form>
           </section>
           <!--Koniec sekcji RSS-->
     </div>
 
   </div>
-
-  <script src="./javascript/events.js"></script>
+  <script src= "/javascript/events.js">
+  </script>
 </body>
 </html>
