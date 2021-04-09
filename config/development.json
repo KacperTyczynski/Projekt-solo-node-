@@ -6,10 +6,6 @@
         "name":"gigas",
         "Options":{
             "undefinedTopology": true
-        },  
-    "mailGun" :{
-        "api_key" : "XXXXXX",
-        "domain" :" " 
-    }
+        }  
     }
 }
