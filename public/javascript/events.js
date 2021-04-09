@@ -10,24 +10,14 @@ const rssKey = "rss"
 
 btnInsert.onclick = function() {
         const value = inptRss.value
-        if(value === null){
+        if(!value){
             alert('Wprowadź url nim klikniesz "Dodaj"!')
             return
         } else {
+            localStorage.setItem(rssKey, value)
             const key= localStorage.key(rssKey)
-            const rsses = localStorage.getItem(value)  
-            lsOutput.innerHTML+=`${value} <br />`
-        }
-
-/*
-        if (value === null){
-            alert('Proszę wpisać adres url!')
-            return 
-        } else {
-            const rsses = localStorage.getItem(rssKey)  
-            rsses.push(value)
-        }
-*/
+            const rsses = localStorage.getItem(key)  
+            lsOutput.innerHTML+=`<div class = "lsOutput">${value} </div>`
 }
 
 btnDelete.onclick = function() {
@@ -36,25 +26,25 @@ btnDelete.onclick = function() {
 }
 
 saveBtn.onclick = async function() {
+    const emailValue = email.value;
     email.readOnly = true
-    urlsy = new Array()
-    const rssesKey= localStorage.key(rssKey)
-    const rsses =localStorage.getItem(rssesKey)
-    email
-    let object ={}
-    let koszyk = []
-    object.email = email
-    object.rsses = urlsy
-    koszyk.push(object)
+    urlsy = [];
+    const urlsToSend = document.querySelectorAll('.lsOutput');
+    urlsToSend.forEach((item) => {
+        urlsy.push(item.innerHTML)
+    })
+    const rssesKey = localStorage.key(rssKey);
+    const urlAwait = await localStorage.setItem(rssKey, urlsy)
+    const rsses = localStorage.getItem(rssesKey);
+
+
 
     const content = {
-        'email' : email,
+        'email' : emailValue,
         'feed' : rsses
     }
 
     JSON.stringify(content)
     console.log(content)
-
-    //fetch()
-
+}
 }

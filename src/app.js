@@ -2,7 +2,7 @@ const express = require('express')
 
 const config = require('config')
 const path = require('path')
-
+const ejs = require('ejs')
 
 // Łączność z bazą
 const DB = require('./storage/db')
@@ -25,7 +25,7 @@ const mailController = new MailController(db,feedParser,mailSender,mailBuilder)
 const rssController = new RssController(db)
 
 const app = express()
-
+app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(ErrorHandler.notFound)
