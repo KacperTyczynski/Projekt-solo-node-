@@ -1,3 +1,8 @@
+const DB = require('../../src/storage/db')
+const db = new DB()
+const config = require('config')
+
+
 const inptRss = document.getElementById("url")
 const btnInsert = document.getElementById("btn")
 const lsOutput = document.getElementById("lsOutput")
@@ -46,5 +51,10 @@ saveBtn.onclick = async function() {
 
     JSON.stringify(content)
     console.log(content)
+
+    /*
+    await db.insert(config.name, content)
+    return content
+    */
 }
 }
