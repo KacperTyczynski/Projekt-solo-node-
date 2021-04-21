@@ -3,7 +3,7 @@ exports.notFound = (req,res, next) => {
     next(err)
 }
 
-exports.catchErrors = (err, req, res, next) => {
-    res.status(err.status || 500)
-    console.log(err.status )
-}
+// exports.catchErrors = (err, req, res, next) => {
+//     res.status(err.status || 500)
+//     console.log(err.status)
+// }
