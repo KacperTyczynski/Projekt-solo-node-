@@ -1,7 +1,7 @@
 {
     "rssparser": {
         "db": {
-            "url":"mongodb://feedparserkt:9xouFY7DWLrahsWfMuWCbLNwj5LlXY9QxVBdeUTYQGaagFqFTEQAPZUxt8wxGU43goVnDSl0dWlBI0q7AG6PXg%3D%3D@feedparserkt.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@feedparserkt@",
+            "url":"mongodb://localhost:27017",
             "name":"node",
             "collection": "feeds",
             "Options": {
