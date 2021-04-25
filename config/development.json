@@ -1,12 +1,17 @@
 {
-    "port": "8000",
-
-    "db": {
-        "url":"mongodb://127.0.0.1:27017",
-        "name":"node",
-        "collection": "feeds",
-        "Options":{
-            "undefinedTopology": true
-        }  
+    "rssparser": {
+        "db": {
+            "url":"mongodb://127.0.0.1:27017",
+            "name":"node",
+            "collection": "feeds",
+            "Options": {
+                "undefinedTopology": true
+            }  
+        },
+        "mailgun": {
+            "domain": "sandboxe0f16c314a3d4617a3a0e4cadac299be.mailgun.org",
+            "apiKey": "71b35d7e-8c124c2b"
+        },
+        "port": 8000
     }
 }

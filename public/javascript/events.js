@@ -35,22 +35,28 @@ btnDelete.onclick = function() {
     location.reload()
 }
 
-saveBtn.onclick = function() {
+saveBtn.onclick = async function() {
     try{
         email.readOnly = true
         rssValue = urls
-        emailValue = email.innerHTML
+        emailValue = document.getElementById('e-mail').value
         content = JSON.stringify(emailValue)
         const data ={ content, rssValue }
-        const options = {
+        const fetch = await fetch('/send',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }
-        fetch('/send',options)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('sukces', data)
+        })
     } catch (e){
         console.log(e.message+ 'error')
     }
+
+    
+
 }
