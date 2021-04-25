@@ -13,6 +13,7 @@ function RssController(db) {
 
     this.retrive = async(email) =>{
         return _db.find(email)
+        console.log('elo')
     }
 }
 
