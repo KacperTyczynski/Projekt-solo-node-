@@ -41,18 +41,20 @@ saveBtn.onclick = async function() {
         rssValue = urls
         emailValue = document.getElementById('e-mail').value
         content = JSON.stringify(emailValue)
-        const data ={ content, rssValue }
-        const fetch = await fetch('/send',{
+        const data =
+        {
+            email = content,
+            rss = rssValue 
+        }
+        fetch('/send', {
             method: 'POST',
             headers: {
+                Accept: 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('sukces', data)
-        })
+        .then((response) => {alert("Zapisano dane")})
     } catch (e){
         console.log(e.message+ 'error')
     }

@@ -32,10 +32,9 @@ const app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
-
 app.post('/send', async (req,res) => {
     try {
-        await controller.add(req.body)
+        console.log(req.body)
         res.status(200).end()
     } catch (e) {
         res.status(400).send(e.message)
@@ -44,12 +43,13 @@ app.post('/send', async (req,res) => {
 
 app.get('/send', async (req,res) => {
     try {
-        const user = await controller.retrive('')
+        const user = await RssController.retrive('')
         res.send(JSON.stringify({ email: user.email, rss: user.rss }))
     } catch (e) {
         res.status(400).send(e.message)
     }
 })
+
 
 
 // app.get('/api/v1/mail', async (req,res) => {
